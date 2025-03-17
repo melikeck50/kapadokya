@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapadokya'nın Büyülü Dünyası</title>
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #457b9d;
+            --light-color: #f1faee;
+            --dark-color: #1d3557;
+            --accent-color: #a8dadc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 150px 20px;
+            position: relative;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(29, 53, 87, 0.9);
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 32px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .card-text {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        .feature-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .feature-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .feature-content {
+            flex: 1;
+            padding: 0 40px;
+        }
+        
+        .feature-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .feature-text {
+            margin-bottom: 20px;
+        }
+        
+        .reverse {
+            flex-direction: row-reverse;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 250px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            border-top: 1px solid #555;
+            padding-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .feature {
+                flex-direction: column;
+            }
+            
+            .feature-content {
+                padding: 20px 0;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Kapadokya</div>
+        <ul class="nav-links">
+            <li><a href="#anasayfa">Ana Sayfa</a></li>
+            <li><a href="#gezilecek-yerler">Gezilecek Yerler</a></li>
+            <li><a href="#yoresel-yemekler">Yöresel Yemekler</a></li>
+            <li><a href="#tarihi-mekanlar">Tarihi Mekanlar</a></li>
+            <li><a href="#konaklama">Konaklama</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <header id="anasayfa">
+        <div class="hero-content">
+            <h1 class="hero-title">Kapadokya'nın Büyülü Dünyasına Hoş Geldiniz</h1>
+            <p class="hero-text">Peribacaları, yeraltı şehirleri ve sıcak hava balonlarıyla dünyaca ünlü bu eşsiz bölgeyi keşfedin.</p>
+            <a href="#gezilecek-yerler" class="btn">Keşfet</a>
+        </div>
+    </header>
+
+    <section id="gezilecek-yerler" class="container">
+        <h2 class="section-title">Gezilecek Yerler</h2>
+        <div class="feature">
+            <div class="feature-img">
+                <img src="/api/placeholder/600/400" alt="Göreme Açık Hava Müzesi">
+            </div>
+            <div class="feature-content">
+                <h3 class="feature-title">Göreme Açık Hava Müzesi</h3>
+                <p class="feature-text">UNESCO Dünya Mirası Listesi'nde yer alan Göreme Açık Hava Müzesi, Kapadokya'nın en önemli tarihi mekanlarından biridir. Müzede kaya kiliseler, manastırlar ve benzersiz freskleri görebilirsiniz.</p>
+                <a href="#" class="btn">Daha Fazla</a>
+            </div>
+        </div>
+        
+        <div class="feature reverse">
+            <div class="feature-img">
+                <img src="/api/placeholder/600/400" alt="Balon Turu">
+            </div>
+            <div class="feature-content">
+                <h3 class="feature-title">Sıcak Hava Balonu Turu</h3>
+                <p class="feature-text">Kapadokya'nın en popüler aktivitelerinden biri olan sıcak hava balonu turları ile bölgenin eşsiz manzarasını gökyüzünden izleyebilirsiniz. Gün doğumu sırasında binlerce balonun gökyüzünü süslemesi unutulmayacak bir deneyim sunar.</p>
+                <a href="#" class="btn">Daha Fazla</a>
+            </div>
+        </div>
+        
+        <div class="feature">
+            <div class="feature-img">
+                <img src="/api/placeholder/600/400" alt="Derinkuyu Yeraltı Şehri">
+            </div>
+            <div class="feature-content">
+                <h3 class="feature-title">Derinkuyu Yeraltı Şehri</h3>
+                <p class="feature-text">Dünya'nın en büyük yeraltı yerleşimlerinden biri olan Derinkuyu, 8 katlı kompleks yapısıyla ziyaretçileri büyülemektedir. Binlerce kişinin yaşayabileceği bu yeraltı şehri, havalandırma sistemleri, su kuyuları ve kiliseler gibi hayatı devam ettirecek tüm unsurları barındırmaktadır.</p>
+                <a href="#" class="btn">Daha Fazla</a>
+            </div>
+        </div>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="/api/placeholder/300/200" alt="Ürgüp" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Ürgüp</h3>
+                    <p class="card-text">Kapadokya'nın en önemli merkezlerinden biri olan Ürgüp, hem tarihi hem de doğal güzellikleriyle dikkat çeker.</p>
+                    <a href="#" class="btn">Keşfet</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/api/placeholder/300/200" alt="Ihlara Vadisi" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Ihlara Vadisi</h3>
+                    <p class="card-text">14 km uzunluğundaki bu vadi, içinde barındırdığı kiliseler ve doğal güzellikleriyle trekking severler için ideal bir rota sunar.</p>
+                    <a href="#" class="btn">Keşfet</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="/api/placeholder/300/
