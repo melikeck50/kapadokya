@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapadokya - Yöresel Yemekler</title>
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #457b9d;
+            --light-color: #f1faee;
+            --dark-color: #1d3557;
+            --accent-color: #a8dadc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(29, 53, 87, 0.9);
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 32px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .food-item {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .food-header {
+            display: flex;
+            align-items: stretch;
+        }
+        
+        .food-img {
+            flex: 1;
+            min-height: 300px;
+        }
+        
+        .food-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .food-intro {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .food-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .food-subtitle {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .food-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .food-tag {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .food-details {
+            padding: 30px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .ingredients-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .ingredient {
+            background-color: var(--light-color);
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ingredient:before {
+            content: '•';
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .recommended-restaurants {
+            margin-top: 20px;
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .restaurant {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .restaurant:last-child {
+            border-bottom: none;
+        }
+        
+        .restaurant-name {
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .restaurant-location {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .food-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .food-card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .food-card-content {
+            padding: 20px;
+        }
+        
+        .food-card-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .food-card-text {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .intro-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            border-top: 1px solid #555;
+            padding-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .food-header {
+                flex-direction: column;
+            }
+            
+            .food-img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Kapadokya</div>
+        <ul class="nav-links">
+            <li><a href="#anasayfa">Ana Sayfa</a></li>
+            <li><a href="#gezilecek-yerler">Gezilecek Yerler</a></li>
+            <li><a href="#yoresel-yemekler">Yöresel Yemekler</a></li>
+            <li><a href="#tarihi-mekanlar">Tarihi Mekanlar</a></li>
+            <li><a href="#konaklama">Konaklama</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="hero-title">Kapadokya'nın Eşsiz Mutfağı</h1>
+            <p class="hero-text">Binlerce yıllık tarihin ve kültürel mirasın buluştuğu, Anadolu'nun en lezzetli yemeklerini keşfedin.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro-section">
+            <h2 class="section-title">Kapadokya Mutfağı</h2>
+            <p>Kapadokya mutfağı, yörenin zengin tarihinden ve coğrafi yapısından etkilenerek oluşmuş benzersiz lezzetler sunar. Geleneksel pişirme yöntemleri, yerel malzemeler ve kuşaktan kuşağa aktarılan tariflerle hazırlanan yemekler, ziyaretçilere unutulmaz bir gastronomi deneyimi yaşatır.</p>
+        </div>
+        
+        <div class="categories">
+            <button class="category-btn active">Tüm Yemekler</button>
+            <button class="category-btn">Ana Yemekler</button>
+            <button class="category-btn">Çorbalar</button>
+            <button class="category-btn">Hamur İşleri</button>
+            <button class="category-btn">Tatlılar</button>
+            <button class="category-btn">İçecekler</button>
+        </div>
+
+        <div class="food-item">
+            <div class="food-header">
+                <div class="food-img">
+                    <img src="/api/placeholder/600/400" alt="Testi Kebabı">
+                </div>
+                <div class="food-intro">
+                    <h2 class="food-title">Testi Kebabı</h2>
+                    <h3 class="food-subtitle">Kapadokya'nın İmza Yemeği</h3>
+                    <p>Kapadokya'ya özgü pişirme yöntemiyle hazırlanan Testi Kebabı, kil testilerde saatlerce pişirilen et, sebze ve baharatların mükemmel uyumuyla ortaya çıkan eşsiz bir lezzettir.</p>
+                    <div class="food-tags">
+                        <span class="food-tag">Ana Yemek</span>
+                        <span class="food-tag">Kuzu Eti</span>
+                        <span class="food-tag">Geleneksel</span>
+                    </div>
+                </div>
+            </div>
+            <div class="food-details">
+                <div class="detail-section">
+                    <h3 class="detail-title">Testi Kebabı H

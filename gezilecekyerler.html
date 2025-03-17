@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapadokya - Gezilecek Yerler</title>
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #457b9d;
+            --light-color: #f1faee;
+            --dark-color: #1d3557;
+            --accent-color: #a8dadc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(29, 53, 87, 0.9);
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 32px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .card-text {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .attraction {
+            margin-bottom: 80px;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .attraction-header {
+            display: flex;
+            align-items: center;
+        }
+        
+        .attraction-img {
+            flex: 1;
+            height: 400px;
+        }
+        
+        .attraction-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .attraction-intro {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .attraction-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .attraction-subtitle {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .attraction-details {
+            padding: 30px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .info-text {
+            font-size: 14px;
+        }
+        
+        .tips-list {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+        
+        .tips-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .tips-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            border-radius: 5px;
+            overflow: hidden;
+            height: 150px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .map-container {
+            height: 400px;
+            background-color: #ddd;
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #777;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            border-top: 1px solid #555;
+            padding-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .attraction-header {
+                flex-direction: column;
+            }
+            
+            .attraction-img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Kapadokya</div>
+        <ul class="nav-links">
+            <li><a href="#anasayfa">Ana Sayfa</a></li>
+            <li><a href="#gezilecek-yerler">Gezilecek Yerler</a></li>
+            <li><a href="#yoresel-yemekler">Yöresel Yemekler</a></li>
+            <li><a href="#tarihi-mekanlar">Tarihi Mekanlar</a></li>
+            <li><a href="#konaklama">Konaklama</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="hero-title">Kapadokya'nın Gezilecek Yerleri</h1>
+            <p class="hero-text">Binlerce yıllık tarihi ve eşsiz coğrafi yapısıyla dünyanın en büyük açık hava müzesi.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="categories">
+            <button class="category-btn active">Tüm Yerler</button>
+            <button class="category-btn">Doğal Güzellikler</button>
+            <button class="category-btn">Tarihi Yerler</button>
+            <button class="category-btn">Müzeler</button>
+            <button class="category-btn">Vadiler</button>
+            <button class="category-btn">Yeraltı Şehirleri</button>
+        </div>
+
+        <div class="attraction">
+            <div class="attraction-header">
+                <div class="attraction-img">
+                    <img src="/api/placeholder/800/400" alt="Göreme Açık Hava Müzesi">
+                </div>
+                <div class="attraction-intro">
+                    <h2 class="attraction-title">Göreme Açık Hava Müzesi</h2>
+                    <h3 class="attraction-subtitle">UNESCO Dünya Mirası</h3>
+                    <p>Kapadokya'nın kalbi olarak bilinen Göreme Açık Hava Müzesi, MS 4. yüzyıldan 13. yüzyıla kadar aktif olan manastır yerleşkesidir. Kaya oyma kiliseler, şapeller, yemekhaneler ve yaşam alanlarıyla benzersiz bir tarihi deneyim sunar.</p>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-icon">⏰</div>
+                            <div class="info-text">08:00 - 19:00</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">💰</div>
+                            <div class="info-text">100 TL</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon">⏱️</div>
+                            <div class="info-text">2-3 saat</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="attraction-details">
+                <div class="detail-section">
+                    <h3 class="detail-title">Göreme Açık Hava Müzesi Hakkında</h3>
+                    <p>Göreme Açık Hava Müzesi, Kapadokya'nın en çok ziyaret edilen tarihi mekanlarından biridir
