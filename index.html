@@ -350,6 +350,351 @@
                 margin-bottom: 40px;
             }
         }
+
+
+    /* Form Stilleri */
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .form-group.half {
+        flex: 1;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: var(--dark-color);
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    textarea {
+        resize: vertical;
+    }
+    
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+    }
+    
+    .btn-primary:hover {
+        background-color: #c92432;
+    }
+    
+    /* İletişim Stilleri */
+    .contact-container {
+        display: flex;
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .contact-info, .contact-form {
+        flex: 1;
+    }
+    
+    .contact-info {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contact-form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contact-item {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    
+    .contact-icon {
+        margin-right: 15px;
+        font-size: 20px;
+        color: var(--primary-color);
+    }
+    
+    .contact-text h3 {
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: var(--secondary-color);
+    }
+    
+    .message-box {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+    }
+    
+    .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        display: block;
+    }
+    
+    .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        display: block;
+    }
+    
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .contact-container {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<!-- JavaScript Kodları -->
+<script>
+    // Rezervasyon formu doğrulama
+    function validateReservation() {
+        const adsoyad = document.getElementById('adsoyad').value;
+        const email = document.getElementById('email').value;
+        const telefon = document.getElementById('telefon').value;
+        const gelisTarihi = new Date(document.getElementById('gelisTarihi').value);
+        const gidisTarihi = new Date(document.getElementById('gidisTarihi').value);
+        const mesajBox = document.getElementById('rezervasyonMesaj');
+        
+        // Tarih kontrolü
+        const bugun = new Date();
+        if (gelisTarihi <= bugun) {
+            mesajBox.textContent = "Geliş tarihi bugünden sonra olmalıdır.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        if (gidisTarihi <= gelisTarihi) {
+            mesajBox.textContent = "Gidiş tarihi geliş tarihinden sonra olmalıdır.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        // Başarılı ise
+        mesajBox.textContent = "Rezervasyon talebiniz alınmıştır. En kısa sürede sizinle iletişime geçeceğiz.";
+        mesajBox.className = "message-box success";
+        
+        // Form gönderimini durdur (gerçek uygulamada veritabanına kaydetmek için Ajax kullanılabilir)
+        setTimeout(() => {
+            document.getElementById('rezervasyonForm').reset();
+        }, 3000);
+        
+        return false;
+    }
+    
+    // İletişim formu doğrulama
+    function validateContact() {
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const message = document.getElementById('contactMessage').value;
+        const mesajBox = document.getElementById('contactMesaj');
+        
+        // Basit doğrulama (gerçek uygulamada daha kapsamlı olabilir)
+        if (name.length < 3) {
+            mesajBox.textContent = "Lütfen geçerli bir isim giriniz.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        if (message.length < 10) {
+            mesajBox.textContent = "Mesajınız en az 10 karakter olmalıdır.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        // Başarılı ise
+        mesajBox.textContent = "Mesajınız gönderilmiştir. Teşekkür ederiz!";
+        mesajBox.className = "message-box success";
+        
+        // Form gönderimini durdur
+        setTimeout(() => {
+            document.getElementById('iletisimForm').reset();
+        }, 3000);
+        
+        return false;
+    }
+    
+    // Tarih alanlarını bugünden itibaren sınırla
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('gelisTarihi').min = today;
+        document.getElementById('gidisTarihi').min = today;
+    });
+</script>
+
+<!-- Font Awesome için gerekli link (ikonlar için) -->
+<!-- Sitenize ekleyin -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+<!-- Stillerinize eklenmesi gereken CSS kodları -->
+<style>
+    /* Form Stilleri */
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+    
+    .form-group.half {
+        flex: 1;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: var(--dark-color);
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    textarea {
+        resize: vertical;
+    }
+    
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+    }
+    
+    .btn-primary:hover {
+        background-color: #c92432;
+    }
+    
+    /* İletişim Stilleri */
+    .contact-container {
+        display: flex;
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .contact-info, .contact-form {
+        flex: 1;
+    }
+    
+    .contact-info {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contact-form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contact-item {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    
+    .contact-icon {
+        margin-right: 15px;
+        font-size: 20px;
+        color: var(--primary-color);
+    }
+    
+    .contact-text h3 {
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: var(--secondary-color);
+    }
+    
+    .message-box {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+    }
+    
+    .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        display: block;
+    }
+    
+    .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        display: block;
+    }
+    
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .contact-container {
+            flex-direction: column;
+        }
+    }
+
+
+
     </style>
 </head>
 <body>
@@ -381,7 +726,7 @@
     </header>
 
     <section id="gezilecek-yerler" class="container">
-        <h2 class="section-title">Gezilecek Yerler</h2>
+        <h2 class="section-title">HOŞGELDİNİZ</h2>
         <div class="feature">
             <div class="feature-img">
                 <img src="/api/placeholder/600/400" alt="Göreme Açık Hava Müzesi">
@@ -441,7 +786,212 @@
           
 
             </section>
-            <script src="script.js">
+            <!-- Rezervasyon Formu Bölümü -->
+<section id="rezervasyon" class="container">
+    <h2 class="section-title">Rezervasyon</h2>
+    <div class="form-container">
+        <form id="rezervasyonForm" onsubmit="return validateReservation()">
+            <div class="form-group">
+                <label for="adsoyad">Ad Soyad</label>
+                <input type="text" id="adsoyad" name="adsoyad" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-posta</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="telefon">Telefon</label>
+                <input type="tel" id="telefon" name="telefon" placeholder="0555 123 4567" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="gelisTarihi">Geliş Tarihi</label>
+                    <input type="date" id="gelisTarihi" name="gelisTarihi" required>
+                </div>
+                <div class="form-group half">
+                    <label for="gidisTarihi">Gidiş Tarihi</label>
+                    <input type="date" id="gidisTarihi" name="gidisTarihi" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kisiSayisi">Kişi Sayısı</label>
+                <select id="kisiSayisi" name="kisiSayisi" required>
+                    <option value="">Seçiniz</option>
+                    <option value="1">1 Kişi</option>
+                    <option value="2">2 Kişi</option>
+                    <option value="3">3 Kişi</option>
+                    <option value="4">4 Kişi</option>
+                    <option value="5+">5 veya daha fazla</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="aktivite">İstediğiniz Aktivite</label>
+                <select id="aktivite" name="aktivite" required>
+                    <option value="">Seçiniz</option>
+                    <option value="balon">Balon Turu</option>
+                    <option value="jeep">Jeep Safari</option>
+                    <option value="atv">ATV Turu</option>
+                    <option value="kulturTur">Kültür Turu</option>
+                    <option value="yemek">Yöresel Yemek Deneyimi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="notlar">Özel İstekler / Notlar</label>
+                <textarea id="notlar" name="notlar" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Rezervasyon Yap</button>
+            </div>
+            <div id="rezervasyonMesaj" class="message-box"></div>
+        </form>
+    </div>
+</section>
 
-            </script>
-            </body>
+<!-- İletişim Formu Bölümü -->
+<section id="iletisim" class="container">
+    <h2 class="section-title">İletişim</h2>
+    <div class="contact-container">
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-text">
+                    <h3>Adres</h3>
+                    <p>Göreme Mahallesi, Müze Caddesi No:25, 50180 Nevşehir</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-text">
+                    <h3>Telefon</h3>
+                    <p>+90 384 271 XX XX</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-text">
+                    <h3>E-posta</h3>
+                    <p>info@kapadokyaturu.com</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-text">
+                    <h3>Çalışma Saatleri</h3>
+                    <p>Pazartesi - Cumartesi: 09:00 - 18:00</p>
+                    <p>Pazar: 10:00 - 16:00</p>
+                </div>
+            </div>
+        </div>
+        <div class="contact-form">
+            <form id="iletisimForm" onsubmit="return validateContact()">
+                <div class="form-group">
+                    <label for="contactName">Ad Soyad</label>
+                    <input type="text" id="contactName" name="contactName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">E-posta</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactSubject">Konu</label>
+                    <input type="text" id="contactSubject" name="contactSubject" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Mesajınız</label>
+                    <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                </div>
+                <div id="contactMesaj" class="message-box"></div>
+            </form>
+        </div>
+    </div>
+</section>
+
+            <script src="script.js">
+              
+    // Rezervasyon formu doğrulama
+    function validateReservation() {
+        const adsoyad = document.getElementById('adsoyad').value;
+        const email = document.getElementById('email').value;
+        const telefon = document.getElementById('telefon').value;
+        const gelisTarihi = new Date(document.getElementById('gelisTarihi').value);
+        const gidisTarihi = new Date(document.getElementById('gidisTarihi').value);
+        const mesajBox = document.getElementById('rezervasyonMesaj');
+        
+        // Tarih kontrolü
+        const bugun = new Date();
+        if (gelisTarihi <= bugun) {
+            mesajBox.textContent = "Geliş tarihi bugünden sonra olmalıdır.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        if (gidisTarihi <= gelisTarihi) {
+            mesajBox.textContent = "Gidiş tarihi geliş tarihinden sonra olmalıdır.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        // Başarılı ise
+        mesajBox.textContent = "Rezervasyon talebiniz alınmıştır. En kısa sürede sizinle iletişime geçeceğiz.";
+        mesajBox.className = "message-box success";
+        
+        // Form gönderimini durdur (gerçek uygulamada veritabanına kaydetmek için Ajax kullanılabilir)
+        setTimeout(() => {
+            document.getElementById('rezervasyonForm').reset();
+        }, 3000);
+        
+        return false;
+    }
+    
+    // İletişim formu doğrulama
+    function validateContact() {
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const message = document.getElementById('contactMessage').value;
+        const mesajBox = document.getElementById('contactMesaj');
+        
+        // Basit doğrulama (gerçek uygulamada daha kapsamlı olabilir)
+        if (name.length < 3) {
+            mesajBox.textContent = "Lütfen geçerli bir isim giriniz.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        if (message.length < 10) {
+            mesajBox.textContent = "Mesajınız en az 10 karakter olmalıdır.";
+            mesajBox.className = "message-box error";
+            return false;
+        }
+        
+        // Başarılı ise
+        mesajBox.textContent = "Mesajınız gönderilmiştir. Teşekkür ederiz!";
+        mesajBox.className = "message-box success";
+        
+        // Form gönderimini durdur
+        setTimeout(() => {
+            document.getElementById('iletisimForm').reset();
+        }, 3000);
+        
+        return false;
+    }
+    
+    // Tarih alanlarını bugünden itibaren sınırla
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('gelisTarihi').min = today;
+        document.getElementById('gidisTarihi').min = today;
+    });
+
+
+        </script>
